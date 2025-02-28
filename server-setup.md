@@ -33,13 +33,17 @@ After docker is installed, we will create our external networks and assign range
       <summary>Verify Network Connectivity</summary>
       
   ```
+      # download and build the container
       git clone https://github.com/nieleyde/tutum-hello-world.git && cd tutum-hello-world
       sed -i 's/php-fpm/php-fpm83/g' Dockerfile
       docker build --network host -t hello-world .
-      
+
+      # start a container on each network 
       sudo docker run --hostname admin -d --network=admin -p 80 tutum/hello-world
       sudo docker run --hostname proxy -d --network=proxy -p 80 tutum/hello-world
         
+      # confirm that the containers can communicate as expected 
+
       docker exec -it admin ping ibm.com
       docker exec -it admin ping 100.100.100.100      
       docker exec -it admin ping 172.22.21.1
@@ -47,16 +51,18 @@ After docker is installed, we will create our external networks and assign range
         PING 172.22.22.1 (172.22.22.1): 56 data bytes
         64 bytes from 172.22.22.1: seq=0 ttl=64 time=0.198 ms
         64 bytes from 172.22.22.1: seq=1 ttl=64 time=0.145 ms
+      ```
 
-      ** the final test should fail - as there is no direct communication between containers on different networks **
+<div class="alert">
+  <span >&times;</span> 
+  <strong>This should FAIL</strong>** as there is no direct communication between containers on different networks **
       docker exec -it admin ping proxy    
         PING 172.22.22.4 (172.22.22.4): 56 data bytes
+
+</div>
+
       
-      docker exec -it proxy ping ibm.com
-      docker exec -it proxy ping 100.100.100.100
-      docker exec -it admin ping 172.22.22.1     
-      docker exec -it admin ping admin
-  ```    
+         
 </details>
 
 <hr>  
