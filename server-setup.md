@@ -63,25 +63,27 @@ After docker is installed, we will create our external networks and assign range
 
 <details>
   <summary>Define standard templates etc</summary>
-To esnure that the system doesnt become unmanagable, setup templates
+  
+To ensure that the system doesnt become unmanagable, setup templates
   
 <i class="fa-regular fa-square-check"></i> all docker folders and processes will be owned by docker (666) and group docker (666)<br>
 <i class="fa-regular fa-square-check"></i> your default user should be added to docker group <br>
   
-| filesystem folder | purpose |
+| **filesystem** | **purpose** |
 | -- | -- |
 |  ```/etc/user/config``` | any volumes mappingfor containers will persist here |
 |  ```/etc/user/archive``` | |
 |  ```/etc/user/github``` | any folder that is to be sync'd with github should store its .git cache here |
 |  ```/etc/user/docker``` | any manual docker setups (such as core) should be here |
   
-  
+  <div id="eg" style="border: 1px">
+
 eg - creating a new container that may have other files and be built locally
 mkdir -p /etc/pknw1/docker/container
 git init --separate-git-dir /etc/pknw1/github/container.git
     
 the persistent files or folders should always be located /etc/pknw1/config and so set in the volume mappings you can also configure a container-config repo for backing up the persistent files
-  
+</div>
   
   
 </details>
