@@ -10,14 +10,15 @@ With docker installed on the system we can now setup the admin and proxy network
 
 <details>
   <summary>Networking Setup</summary>
-  <div id="expand" style="background-color:red; border: 1px">
+  <div id="expand" style="border: 1px">
     
   ```
   docker network create -subnet 172.22.22.0/24 admin 
   docker network create -subnet 172.22.21.0/24 proxy
   ```
   
-  - [x] Open Tailscale Management Console and under the server config, setup Subnets 
+- [x] Open Tailscale Management Console and under the server config, setup Subnets 
+
   - [x] Run a test container on each docker network
     - [x] make sure you can access both containers from your home location
     - [x] make sure you can ping the containers on just their hostnames

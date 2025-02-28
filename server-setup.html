@@ -29,6 +29,8 @@
 
   
 <style>
+summary { background-color:#ac9696}
+li { list-style: none }
 body, p {
 	    font-family: "PT Sans","Helvetica Neue",Arial,sans-serif !important;
 }
@@ -93,7 +95,7 @@ aside.sidebar li { padding: 0px !important; }
 
 <script type="text/javascript">
 
-  fetch('server-setup.md')
+  fetch('/server-setup.md')
     .then(response => response.text())
     .then((data) => {
       var text = marked.parse(data);
