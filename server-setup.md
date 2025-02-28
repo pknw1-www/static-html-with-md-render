@@ -1,8 +1,8 @@
 ## Configuring Core Server Components
-<i class="fa-regular fa-square-check"></i> Networking
-<i class="fa-regular fa-square-check"></i> VPN 
-<i class="fa-regular fa-square-check"></i> Docker
-<i class="fa-regular fa-square-check"></i> Docker Ecosystem
+<i class="fa-regular fa-square-check"></i> Networking <br>
+<i class="fa-regular fa-square-check"></i> VPN <br>
+<i class="fa-regular fa-square-check"></i> Docker <br>
+<i class="fa-regular fa-square-check"></i> Docker Ecosystem <br>
 
 
 ### Docker Core System
@@ -17,12 +17,12 @@ With docker installed on the system we can now setup the admin and proxy network
   docker network create -subnet 172.22.21.0/24 proxy
   ```
   
-<i class="fa-regular fa-square-check"></i> Open [Tailscale Management Console](https://login.tailscale.com/admin/machines) and under the server config, setup Subnets 
+<i class="fa-regular fa-square-check"></i> Open [Tailscale Management Console](https://login.tailscale.com/admin/machines) and under the server config, setup Subnets <br>
 
-  <i class="fa-regular fa-square-check"></i> Run a test container on each docker network
-    <i class="fa-regular fa-square-check"></i> make sure you can access both containers from your home location
-    <i class="fa-regular fa-square-check"></i> make sure you can ping the containers on just their hostnames
-    <i class="fa-regular fa-square-check"></i> ensure that you can ping from the containers out to the internet
+  <i class="fa-regular fa-square-check"></i> Run a test container on each docker network<br>
+    <i class="fa-regular fa-square-check"></i> make sure you can access both containers from your home location<br>
+    <i class="fa-regular fa-square-check"></i> make sure you can ping the containers on just their hostnames<br>
+    <i class="fa-regular fa-square-check"></i> ensure that you can ping from the containers out to the internet<br>
   
     After docker is installed, we will create our external networks and assign ranges
   </div>
@@ -65,16 +65,16 @@ With docker installed on the system we can now setup the admin and proxy network
   <summary>Define standard templates etc</summary>
   To esnure that the system doesnt become unmanagable, setup templates
   
-  -[x] all docker folders and processes will be owned by docker (666) and group docker (666)
-  -[x] your default user should be added to docker group 
+   <i class="fa-regular fa-square-check"></i> all docker folders and processes will be owned by docker (666) and group docker (666)<br>
+   <i class="fa-regular fa-square-check"></i> your default user should be added to docker group <br>
   
   | filesystem folder | purpose |
   | -- | -- |
-  |  mkdir -p /etc/myusername/config | any volumes mappingfor containers will persist here |
-  |  mkdir -p /etc/myusername/archive | |
-  |  mkdir -p /etc/myusername/github | any folder that is to be sync'd with github should store its .git cache here |
-  |  mkdir -p /etc/myusername/docker | any manual docker setups (such as core) should be here |
-  |  mkdir -p /etc/myusername/dev | |
+  |  ```/etc/user/config``` | any volumes mappingfor containers will persist here |
+  |  ```/etc/user/archive``` | |
+  |  ```/etc/user/github``` | any folder that is to be sync'd with github should store its .git cache here |
+  |  ```/etc/user/docker``` | any manual docker setups (such as core) should be here |
+  |  ```/etc/user/dev``` | |
   
   ```
   eg - creating a new container that may have pther files and be built locally
