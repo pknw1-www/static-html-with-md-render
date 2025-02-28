@@ -24,7 +24,7 @@ With docker installed on the system we can now setup the admin and proxy network
     <i class="fa-regular fa-square-check"></i> make sure you can ping the containers on just their hostnames<br>
     <i class="fa-regular fa-square-check"></i> ensure that you can ping from the containers out to the internet<br>
   
-    After docker is installed, we will create our external networks and assign ranges
+After docker is installed, we will create our external networks and assign ranges
   </div>
   
  </details>
@@ -63,26 +63,24 @@ With docker installed on the system we can now setup the admin and proxy network
 
 <details>
   <summary>Define standard templates etc</summary>
-  To esnure that the system doesnt become unmanagable, setup templates
+To esnure that the system doesnt become unmanagable, setup templates
   
-   <i class="fa-regular fa-square-check"></i> all docker folders and processes will be owned by docker (666) and group docker (666)<br>
-   <i class="fa-regular fa-square-check"></i> your default user should be added to docker group <br>
+<i class="fa-regular fa-square-check"></i> all docker folders and processes will be owned by docker (666) and group docker (666)<br>
+<i class="fa-regular fa-square-check"></i> your default user should be added to docker group <br>
   
-  | filesystem folder | purpose |
-  | -- | -- |
-  |  ```/etc/user/config``` | any volumes mappingfor containers will persist here |
-  |  ```/etc/user/archive``` | |
-  |  ```/etc/user/github``` | any folder that is to be sync'd with github should store its .git cache here |
-  |  ```/etc/user/docker``` | any manual docker setups (such as core) should be here |
-  |  ```/etc/user/dev``` | aa |
+| filesystem folder | purpose |
+| -- | -- |
+|  ```/etc/user/config``` | any volumes mappingfor containers will persist here |
+|  ```/etc/user/archive``` | |
+|  ```/etc/user/github``` | any folder that is to be sync'd with github should store its .git cache here |
+|  ```/etc/user/docker``` | any manual docker setups (such as core) should be here |
   
   
-    eg - creating a new container that may have other files and be built locally
-    mkdir -p /etc/pknw1/docker/container
-    git init --separate-git-dir /etc/pknw1/github/container.git
+eg - creating a new container that may have other files and be built locally
+mkdir -p /etc/pknw1/docker/container
+git init --separate-git-dir /etc/pknw1/github/container.git
     
-    the persistent files or folders should always be located /etc/pknw1/config and so set in the volume mappings
-    you can also configure a container-config repo for backing up the persistent files
+the persistent files or folders should always be located /etc/pknw1/config and so set in the volume mappings you can also configure a container-config repo for backing up the persistent files
   
   
   
@@ -90,7 +88,7 @@ With docker installed on the system we can now setup the admin and proxy network
 <hr>  
 
 <details>
-      <summary>Install and base configure Nginx Proxy Manager</summary>
+<summary>Install and base configure Nginx Proxy Manager</summary>
       
   ```
     mkdir -p /etc/pknw1/docker/core-services/
@@ -143,26 +141,26 @@ With docker installed on the system we can now setup the admin and proxy network
 <details>
       <summary>Install internal Nginx Proxy Manager Split Networks Configuration</summary>
   
-      your DNS is configured so that any hostname containing 'admin' resolves to your Tailscale Address
-      you will open a service and if you are on VPN you will connect to any address for any service
-      if you are not on Tailscale VPN, you will resolve to the Tailscale IP still, but have no access to it
+your DNS is configured so that any hostname containing 'admin' resolves to your Tailscale Address
+you will open a service and if you are on VPN you will connect to any address for any service
+if you are not on Tailscale VPN, you will resolve to the Tailscale IP still, but have no access to it
       
-      as we are only using one appliance for both "secured zones" there may be attempts to send a request for an admin
-      service via the public IP; if they should bypass header checking, we also have an nginx rule ensuring that only users 
-      on the 172 networks or within the TailNet are allowed access - any failed attmpts rewdirect through to public ip
-      1. add the host - be sure to add the top level domain and a wildcard
-      2. select SSL tab and create new cert request
-      3. request a wildcard cert using DNS challenge
-      4. setup the advamced rules checking source IP
+as we are only using one appliance for both "secured zones" there may be attempts to send a request for an admin
+service via the public IP; if they should bypass header checking, we also have an nginx rule ensuring that only users 
+on the 172 networks or within the TailNet are allowed access - any failed attmpts rewdirect through to public ip
+1. add the host - be sure to add the top level domain and a wildcard
+2. select SSL tab and create new cert request
+3. request a wildcard cert using DNS challenge
+4. setup the advamced rules checking source IP
   
-      ```
-        location ~* ^/$ {
-            allow 100.100.69.0/24;
-            allow 172.22.0.0/16;
-            deny all;
-          }
-      you must ensure that the 172 range that you allow through here is only the admin range and not the proxy range
-      ```
+```
+  location ~* ^/$ {
+      allow 100.100.69.0/24;
+      allow 172.22.0.0/16;
+      deny all;
+    }
+you must ensure that the 172 range that you allow through here is only the admin range and not the proxy range
+```
       
       ![](https://i.imgur.com/a4zoTSp.png)
     
