@@ -53,13 +53,6 @@ After docker is installed, we will create our external networks and assign range
         64 bytes from 172.22.22.1: seq=1 ttl=64 time=0.145 ms
       ```
 
-    <div class="alert">
-      <span >&times;</span> 
-      <strong>This should FAIL</strong> as there is no direct communication between containers on different networks **
-          docker exec -it admin ping proxy    
-            PING 172.22.22.4 (172.22.22.4): 56 data bytes
-
-    </div>
 
       
          
