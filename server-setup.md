@@ -1,5 +1,5 @@
 ## Configuring Core Server Components
-- [x] Networking
+<i class="fa-regular fa-square-check"></i> Networking
 - [x] VPN 
 - [x] Docker
 - [x] Docker Ecosystem
