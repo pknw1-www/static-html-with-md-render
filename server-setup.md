@@ -5,7 +5,20 @@
 - [x] Docker Ecosystem
 
 
-### Docker Ecosystem
+### Docker Core System
+With docker installed on the system we can now setup the admin and proxy networks, and our critical systems
+
+<details>
+  <summary>Networking Setup</summary>
+
+After docker is installed, we will create our external networks and assign ranges
+
+| ```docker network create --subnet 172.22.22.0/24 admin ``` | ```docker network create --subnet 172.22.21.0/24 proxy ```|
+| -- | -- |
+ 
+</details>
+
+
 Once docker is installed, we need to put the standards, templates and mechanisms for running a complex docker stack; 
 
 | # | Description |
