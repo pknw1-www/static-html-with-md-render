@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libaria2: C++ library interface to aria2 &mdash; aria2 1.37.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Technical Notes" href="technical-notes.html" />
+    <link rel="prev" title="aria2 - The ultra fast download utility" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            aria2
+          </a>
+              <div class="version">
+                1.37.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="aria2c.html">aria2c(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">aria2 - The ultra fast download utility</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">libaria2: C++ library interface to aria2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="technical-notes.html">Technical Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aria2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">libaria2: C++ library interface to aria2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/libaria2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libaria2-c-library-interface-to-aria2">
+<h1>libaria2: C++ library interface to aria2<a class="headerlink" href="#libaria2-c-library-interface-to-aria2" title="Permalink to this heading">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The API has not been frozen yet. It will be changed on the course of
+the development.</p>
+</div>
+<p>The libaria2 is a C++ library and offers the core functionality of
+aria2. The library takes care of all networking and downloading stuff,
+so its usage is very straight forward right now. See the following
+Tutorial section to see how to use API.</p>
+<section id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">¶</a></h2>
+<p>This section is a step by step guide to create a program to download
+files using libaria2. The complete source is located at
+<em>libaria2ex.cc</em> in <em>examples</em> directory.</p>
+<p>The <em>libaria2ex</em> program takes one or more URIs and downloads each of
+them in parallel. The usage is:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">Usage</span><span class="p">:</span><span class="w"> </span><span class="n">libaria2ex</span><span class="w"> </span><span class="n">URI</span><span class="w"> </span><span class="p">[</span><span class="n">URI</span><span class="p">...]</span>
+
+<span class="w">  </span><span class="n">Download</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">URIs</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">parallel</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">directory</span><span class="p">.</span>
+</pre></div>
+</div>
+<p>The source code uses C++11 features, so C++11 enabled compiler is
+required. GCC 4.7 works well here.</p>
+<p>OK, let's look into the source code. First, include aria2.h header
+file:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;aria2/aria2.h&gt;</span>
+</pre></div>
+</div>
+<p>Skip to the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function. After checking command-line
+arguments, we initialize libaria2:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">aria2</span><span class="o">::</span><span class="n">libraryInit</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>And create aria2 session object:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">aria2</span><span class="o">::</span><span class="n">Session</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
+<span class="c1">// Create default configuration. The libaria2 takes care of signal</span>
+<span class="c1">// handling.</span>
+<span class="n">aria2</span><span class="o">::</span><span class="n">SessionConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span>
+<span class="c1">// Add event callback</span>
+<span class="n">config</span><span class="p">.</span><span class="n">downloadEventCallback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">downloadEventCallback</span><span class="p">;</span>
+<span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">sessionNew</span><span class="p">(</span><span class="n">aria2</span><span class="o">::</span><span class="n">KeyVals</span><span class="p">(),</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">Session</span></code> <code class="docutils literal notranslate"><span class="pre">session</span></code> is an aria2 session object. You need this
+object through out the download process. Please keep in mind that only
+one <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">Session</span></code> object can be allowed per process due to the heavy
+use of static objects in aria2 code base.  <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">Session</span></code> object is
+not safe for concurrent accesses from multiple threads.  It must be
+used from one thread at a time.  In general, libaria2 is not entirely
+thread-safe.  <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">SessionConfig</span></code> <code class="docutils literal notranslate"><span class="pre">config</span></code> holds configuration for
+the session object. The constructor initializes it with the default
+values. In this setup, <code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">SessionConfig::keepRunning</span></code> is
+<code class="docutils literal notranslate"><span class="pre">false</span></code> which means <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> returns when all downloads are
+processed, just like aria2c utility without RPC enabled.  And
+<code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">SessionConfig::useSignalHandler</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, which means
+libaria2 will setup signal handlers and catches certain signals to
+halt download process gracefully. We also setup event handler callback
+function <code class="docutils literal notranslate"><span class="pre">downloadEventCallback</span></code>.  It will be called when an event
+occurred such as download is started, completed, etc. In this example
+program, we handle 2 events: download completion and error. For each
+event, we print the GID of the download and several other
+information:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">downloadEventCallback</span><span class="p">(</span><span class="n">aria2</span><span class="o">::</span><span class="n">Session</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">DownloadEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">const</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">A2Gid</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gid</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">userData</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">aria2</span><span class="o">::</span><span class="no">EVENT_ON_DOWNLOAD_COMPLETE</span><span class="p">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;COMPLETE&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">aria2</span><span class="o">::</span><span class="no">EVENT_ON_DOWNLOAD_ERROR</span><span class="p">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;ERROR&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">gidToHex</span><span class="p">(</span><span class="n">gid</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] &quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">userData</span></code> object is specified by
+<code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">SessionConfig::userData</span></code>. In this example, we don't specify
+it, so it is <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>.</p>
+<p>The first argument to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">sessionNew()</span></code> is <code class="docutils literal notranslate"><span class="pre">aria2::KeyVals()</span></code>.
+This type is used in API to specify vector of key/value pairs, mostly
+representing aria2 options. For example, specify an option
+<code class="docutils literal notranslate"><span class="pre">file-allocation</span></code> to <code class="docutils literal notranslate"><span class="pre">none</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">aria2</span><span class="o">::</span><span class="n">KeyVals</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;file-allocation&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The first argument of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">sessionNew()</span></code> is analogous to the
+command-line argument to aria2c program. In the example program, we
+provide no options, so just pass empty vector.</p>
+<p>After the creation of session object, let's add downloads given in the
+command-line:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Add download item to session</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">argc</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">uris</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]};</span>
+<span class="w">  </span><span class="n">aria2</span><span class="o">::</span><span class="n">KeyVals</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
+<span class="w">  </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">addUri</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="n">uris</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">rv</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed to add download &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">uris</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We iterate command-line arguments and add each of them as a separate
+download. <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">addUri()</span></code> can take one or more URIs to download
+several sources, just like aria2c does, but in this example, we just
+give just one URI. We provide no particular option for the download,
+so pass the empty vector as options. The second argument of
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">addUri()</span></code> takes a pointer to <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">A2Gid</span></code>. If it is not
+<code class="docutils literal notranslate"><span class="pre">NULL</span></code>, the function assigns the GID of the new download to it.  In
+this example code, we have no interest for it, so just pass
+<code class="docutils literal notranslate"><span class="pre">nullptr</span></code>.</p>
+<p>We have set up everything at this stage. So let's start download.  To
+perform the download, call <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> repeatedly until it returns
+the value other than <code class="docutils literal notranslate"><span class="pre">1</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">RUN_ONCE</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">rv</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, we call <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> with <code class="xref c c-macro docutils literal notranslate"><span class="pre">RUN_ONCE</span></code>. It means
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> returns after one event polling and its action handling
+or polling timeout (which is approximately 1 second). If <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">1</span></code>, it means the download is in progress and the
+application must call it again. If it returns <code class="docutils literal notranslate"><span class="pre">0</span></code>, then no download
+is left (or it is stopped by signal handler or <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">shutdown()</span></code>).
+If the function catches error, it returns <code class="docutils literal notranslate"><span class="pre">-1</span></code>.  The good point of
+using <code class="xref c c-macro docutils literal notranslate"><span class="pre">RUN_ONCE</span></code> is that the application can use libaria2 API
+when <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> returns. In the example program, we print the
+progress of the download in every no less than 500 millisecond:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Print progress information once per 500ms</span>
+<span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">;</span>
+<span class="w">  </span><span class="n">aria2</span><span class="o">::</span><span class="n">GlobalStat</span><span class="w"> </span><span class="n">gstat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">getGlobalStat</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Overall #Active:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">gstat</span><span class="p">.</span><span class="n">numActive</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; #waiting:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">gstat</span><span class="p">.</span><span class="n">numWaiting</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; D:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">gstat</span><span class="p">.</span><span class="n">downloadSpeed</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;KiB/s&quot;</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; U:&quot;</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">gstat</span><span class="p">.</span><span class="n">uploadSpeed</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;KiB/s &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">aria2</span><span class="o">::</span><span class="n">A2Gid</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">getActiveDownload</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gid</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">gids</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">aria2</span><span class="o">::</span><span class="n">DownloadHandle</span><span class="o">*</span><span class="w"> </span><span class="n">dh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">getDownloadHandle</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">gid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">dh</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;    [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">gidToHex</span><span class="p">(</span><span class="n">gid</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] &quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getCompletedLength</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getTotalLength</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;(&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getTotalLength</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">?</span>
+<span class="w">                    </span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getCompletedLength</span><span class="p">()</span><span class="o">/</span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getTotalLength</span><span class="p">())</span>
+<span class="w">                    </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;%)&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; D:&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getDownloadSpeed</span><span class="p">()</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;KiB/s, U:&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dh</span><span class="o">-&gt;</span><span class="n">getUploadSpeed</span><span class="p">()</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;KiB/s&quot;</span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">      </span><span class="n">aria2</span><span class="o">::</span><span class="n">deleteDownloadHandle</span><span class="p">(</span><span class="n">dh</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We first call <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">getGlobalStat()</span></code> function to get global
+statistics of the downloads. Then, call <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">getActiveDownload()</span></code>
+function to get the vector of active download's GID. For each GID, we
+retrieve <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">DownloadHandle</span></code> object using
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">getDownloadHandle()</span></code> function and get detailed information.
+Please don't forget to delete <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">DownloadHandle</span></code> after the use
+and before the next call of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code>.  Keep in mind that the life
+time of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">DownloadHandle</span></code> object is before the next call of
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">run()</span></code> function.</p>
+<p>After the loop, finalize download calling <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">sessionFinal()</span></code>
+function and call <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">libraryDeinit()</span></code> to release resources for the
+library:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aria2</span><span class="o">::</span><span class="n">sessionFinal</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="n">aria2</span><span class="o">::</span><span class="n">libraryDeinit</span><span class="p">();</span>
+<span class="k">return</span><span class="w"> </span><span class="n">rv</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Calling <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">sessionFinal()</span></code> is important because it performs
+post-download action, including saving sessions and destroys session
+object. So failing to call this function will lead to lose the
+download progress and memory leak. The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">sessionFinal()</span></code> returns
+the code defined in <a class="reference internal" href="aria2c.html#exit-status"><span class="std std-ref">EXIT STATUS</span></a>. aria2c program also returns
+the same value as exist status, so do the same in this tiny example
+program.</p>
+<p>See also <em>libaria2wx.cc</em> which uses wx GUI component as UI and use
+background thread to run download.</p>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">¶</a></h2>
+<p>To use the API function, include <code class="docutils literal notranslate"><span class="pre">aria2/aria2.h</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;aria2/aria2.h&gt;</span>
+</pre></div>
+</div>
+<p>All enums, types and functions are under <code class="docutils literal notranslate"><span class="pre">aria2</span></code> namespace. To link
+with libaria2, use linker flag <code class="docutils literal notranslate"><span class="pre">-laria2</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="README.html" class="btn btn-neutral float-left" title="aria2 - The ultra fast download utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="technical-notes.html" class="btn btn-neutral float-right" title="Technical Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
