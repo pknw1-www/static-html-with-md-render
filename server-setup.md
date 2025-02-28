@@ -77,12 +77,12 @@ With docker installed on the system we can now setup the admin and proxy network
   |  ```/etc/user/dev``` | |
   
   ```
-  eg - creating a new container that may have pther files and be built locally
-  mkdir -p /etc/pknw1/docker/container
-  git init --separate-git-dir /etc/pknw1/github/container.git
-  
-  the persistent files or folders should always be located /etc/pknw1/config and so set in the volume mappings
-  you can also configure a container-config repo for backing up the persitent files
+    eg - creating a new container that may have other files and be built locally
+    mkdir -p /etc/pknw1/docker/container
+    git init --separate-git-dir /etc/pknw1/github/container.git
+    
+    the persistent files or folders should always be located /etc/pknw1/config and so set in the volume mappings
+    you can also configure a container-config repo for backing up the persistent files
   ```
   
   
@@ -91,7 +91,7 @@ With docker installed on the system we can now setup the admin and proxy network
 <hr>  
 
 <details>
-      <summary>Install and base condfigure Nginx Proxy Manager</summary>
+      <summary>Install and base configure Nginx Proxy Manager</summary>
       
   ```
     mkdir -p /etc/pknw1/docker/core-services/
@@ -102,31 +102,31 @@ With docker installed on the system we can now setup the admin and proxy network
   ```
   
   ```
-services:
-  proxymanager:
-    image: jc21/nginx-proxy-manager:latest
-    restart: unless-stopped
-    ports:
-      - 100.100.69.2:80:80
-      - 100.100.69.2:443:443
-      - 100.100.69.2:81:81
-      - 172.22.20.1:80:80
-    privileged: true
-    volumes:
-      - /etc/pknw1/config/nginx_proxy_manager/98-themepark:/etc/cont-init.d/99-themepark
-      - /etc/pknw1/config/nginx_proxy_manager/data:/data
-      - /etc/pknw1/config/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-    container_name: proxymanager
-    hostname: proxymanager
-    networks:
-      - proxy
-      - admin
-    environment:
-      - VIRTUAL_HOST=proxymanager.admin.pknw1.co.uk
-      - VIRTUAL_PORT=81
-      - VIRTUAL_PROTO=http
+        services:
+          proxymanager:
+            image: jc21/nginx-proxy-manager:latest
+            restart: unless-stopped
+            ports:
+              - 100.100.69.2:80:80
+              - 100.100.69.2:443:443
+              - 100.100.69.2:81:81
+              - 172.22.20.1:80:80
+            privileged: true
+            volumes:
+              - /etc/pknw1/config/nginx_proxy_manager/98-themepark:/etc/cont-init.d/99-themepark
+              - /etc/pknw1/config/nginx_proxy_manager/data:/data
+              - /etc/pknw1/config/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
+            labels:
+              - "com.centurylinklabs.watchtower.enable=true"
+            container_name: proxymanager
+            hostname: proxymanager
+            networks:
+              - proxy
+              - admin
+            environment:
+              - VIRTUAL_HOST=proxymanager.admin.pknw1.co.uk
+              - VIRTUAL_PORT=81
+              - VIRTUAL_PROTO=http
   ```    
   
   this setup exposes an unencrypted port on your public IP address - so it is preferred if you connect via the local address assigned when connected to the admin network
