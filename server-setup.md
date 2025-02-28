@@ -131,11 +131,11 @@ services:
   
   this setup exposes an unencrypted port on your public IP address - so it is preferred if you connect via the local address assigned when connected to the admin network
   
-  - login and configure your admin user
-  - docker compose down and docker compose up to check persistence
-  - once verified remove port 81 mappong from the docker compose
+  <i class="fa-regular fa-square-check"></i>login and configure your admin user<br>
+  <i class="fa-regular fa-square-check"></i>docker compose down and docker compose up to check persistence<br>
+  <i class="fa-regular fa-square-check"></i>once verified remove port 81 mappong from the docker compose<br>
   
-  - restart NPM and prepare out inbound proxy hosts
+  <i class="fa-regular fa-square-check"></i> restart NPM and prepare out inbound proxy hosts<br>
   
 </details>
 <hr>  
@@ -163,33 +163,20 @@ services:
             deny all;
           }
       you must ensure that the 172 range that you allow through here is only the admin range and not the proxy range
-  ```
+      ```
       
       ![](https://i.imgur.com/a4zoTSp.png)
-  
-  ```
-
-  ```    
+    
 </details>
 
-
 <hr>  
-
-
 <details>
       <summary>Install internal jwilder-nginx-proxy </summary>
-      
-  ```
-
-  ```    
 </details>
 <hr>  
 
 <details>
       <summary>Setup Dockge container management </summary>
-      
-  ```
-  ```    
 </details>
 
 
@@ -204,7 +191,3 @@ Once docker is installed, we need to put the standards, templates and mechanisms
 | 2 | Setup the split-tier networking and VPN Access|
 | 3 | Implement our "core-services" in docker; setup backups, automation etc |
 
-
-One    | Two | Three | Four    | Five  | Six
--|||||-
-Span <td colspan=3>triple  <td colspan=2>double
