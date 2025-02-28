@@ -1,8 +1,8 @@
 ## Configuring Core Server Components
 <i class="fa-regular fa-square-check"></i> Networking
-- [x] VPN 
-- [x] Docker
-- [x] Docker Ecosystem
+<i class="fa-regular fa-square-check"></i> VPN 
+<i class="fa-regular fa-square-check"></i> Docker
+<i class="fa-regular fa-square-check"></i> Docker Ecosystem
 
 
 ### Docker Core System
@@ -17,13 +17,12 @@ With docker installed on the system we can now setup the admin and proxy network
   docker network create -subnet 172.22.21.0/24 proxy
   ```
   
-- [x] Open Tailscale Management Console and under the server config, setup Subnets 
+<i class="fa-regular fa-square-check"></i> Open [Tailscale Management Console](https://login.tailscale.com/admin/machines) and under the server config, setup Subnets 
 
-  - [x] Run a test container on each docker network
-    - [x] make sure you can access both containers from your home location
-    - [x] make sure you can ping the containers on just their hostnames
-    - [x] ensure that you can ping from the containers out to the internet
-       https://login.tailscale.com/admin/machines
+  <i class="fa-regular fa-square-check"></i> Run a test container on each docker network
+    <i class="fa-regular fa-square-check"></i> make sure you can access both containers from your home location
+    <i class="fa-regular fa-square-check"></i> make sure you can ping the containers on just their hostnames
+    <i class="fa-regular fa-square-check"></i> ensure that you can ping from the containers out to the internet
   
     After docker is installed, we will create our external networks and assign ranges
   </div>
