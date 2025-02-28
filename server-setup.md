@@ -29,7 +29,7 @@ After docker is installed, we will create our external networks and assign range
   
  </details>
 <hr>  
-   <details>
+<details>
       <summary>Verify Network Connectivity</summary>
       
   ```
@@ -50,11 +50,8 @@ After docker is installed, we will create our external networks and assign range
       **all the above should respond wirh nirmal ping**
         PING 172.22.22.1 (172.22.22.1): 56 data bytes
         64 bytes from 172.22.22.1: seq=0 ttl=64 time=0.198 ms
-        64 bytes from 172.22.22.1: seq=1 ttl=64 time=0.145 ms
-      ```
-
-
-      
+        64 bytes from 172.22.22.1: seq=1 tl=64 time=0.145 ms
+  ```
          
 </details>
 
